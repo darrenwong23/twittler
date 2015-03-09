@@ -27,8 +27,10 @@
           var index = lastIndex;
           while(index <= streams.home.length - 1){
             var tweet = streams.home[index];
-            var $tweet = $('<div class="well box"></div>');
-            $tweet.text(tweet.user + ': ' + tweet.message + " (" + tweet.created_at + " )");
+            console.log(html);
+            var html = '<div class = "box well" id="' + tweet.user +'"></div>';
+            var $tweet = $(html);
+            $tweet.html(tweet.user + ': ' + tweet.message + " <br>(" + tweet.created_at + " )");
             $tweet.prependTo($body);
             index += 1;
           };
@@ -44,12 +46,8 @@
             var tweet = streams.home[index];
 
             if(tweet.user === userName) {
-              var $tweet = '<div class="well">';
-              $tweet += '<p> <a href="#" class=' +tweet.userName + '>';
-              $tweet += tweet.userName +"</a>";
-              $tweet += ': '+ tweet.message + '</p>';
-              $tweet += '<p>'+ tweet.created_at+ '</p></div>';
-              console.log($tweet);
+              var $tweet = $('<div class="well"></div>');
+              $tweet.html(tweet.user + ': ' + tweet.message + "<br> (" + tweet.created_at + " )");
               $tweet.prependTo($container);
             }
             index ++;
@@ -66,8 +64,9 @@
 
 
         //box click
-        $('.box').on('click', function() {
-          loadUserTweets("mracus", $('.modal-body'));
+        $(document).on('click', '.box', function() {
+
+          loadUserTweets(event.target.id, $('.modal-body'));
           $('#myModal').modal('toggle');
         });
 
@@ -76,9 +75,6 @@
       });
 
 </script>
-
-
-
 
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
